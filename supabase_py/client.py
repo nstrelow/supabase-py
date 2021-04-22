@@ -180,7 +180,7 @@ class Client:
         return headers
 
 
-def create_client(supabase_url: str, supabase_key: str, **options) -> Client:
+def create_client(supabase_url: str, supabase_key: str, session: Dict[str, Any] = None, **options) -> Client:
     """Create client function to instanciate supabase client like JS runtime.
 
     Parameters
@@ -207,4 +207,4 @@ def create_client(supabase_url: str, supabase_key: str, **options) -> Client:
     -------
     Client
     """
-    return Client(supabase_url=supabase_url, supabase_key=supabase_key, **options)
+    return Client(supabase_url=supabase_url, supabase_key=supabase_key, session=session, **options)
