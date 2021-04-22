@@ -19,7 +19,7 @@ class Client:
     """Supabase client class."""
 
     def __init__(
-        self, supabase_url: str, supabase_key: str, **options,
+        self, supabase_url: str, supabase_key: str, session: Dict[str, Any] = None, **options,
     ):
         """Instantiate the client.
 
@@ -40,6 +40,7 @@ class Client:
             raise Exception("supabase_key is required")
         self.supabase_url = supabase_url
         self.supabase_key = supabase_key
+        self.session = session
         # Start with defaults, write headers and prioritise user overwrites.
         settings: Dict[str, Any] = {
             **DEFAULT_OPTIONS,
@@ -171,9 +172,10 @@ class Client:
     def _get_auth_headers(self) -> Dict[str, str]:
         """Helper method to get auth headers."""
         # What's the corresponding method to get the token
+        authBearer = self.session['accessToken'] or self.supabase_key
         headers: Dict[str, str] = {
             "apiKey": self.supabase_key,
-            "Authorization": f"Bearer {self.supabase_key}",
+            "Authorization": f"Bearer {authBearer}",
         }
         return headers
 
